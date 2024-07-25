@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    name: "support",
+    name: "snowgc",
     version: "1.0",
     author: "Loid Butter",
     countDown: 5,
@@ -19,7 +19,7 @@ module.exports = {
 
   // onStart is a function that will be executed when the command is executed
   onStart: async function ({ api, args, message, event }) {
-    const supportGroupId = "6932244393564961"; // ID of the support group
+    const supportGroupId = "10083522841719700"; // ID of the support group
 
     const threadID = event.threadID;
     const userID = event.senderID;
