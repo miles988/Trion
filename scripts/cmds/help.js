@@ -61,7 +61,7 @@ module.exports = {
       const totalCommands = commands.size;
       msg += `\nCurrently,i have  ${totalCommands} commands that can be used.Soon more commands will be added\n`;
       msg += `Type ${prefix} help command Name to view the details of that command\n`;
-      msg += `𝑴𝑹 𝑷𝑬𝑹𝑭𝑬𝑪𝑻 𝑨𝑰 (•̀ᴗ•́)و`;
+      msg += `Odiamus GoatBot V2 (•̀ᴗ•́)و`;
 
 
       const helpListImages = [" "
