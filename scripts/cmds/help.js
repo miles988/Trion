@@ -3,7 +3,7 @@ const axios = require("axios");
 const path = require("path");
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
-const doNotDelete = "[ 😎 | Perfect AI ]";
+const doNotDelete = "[ 🍻 | Odiamus AI ]";
 
 module.exports = {
   config: {
@@ -34,7 +34,7 @@ module.exports = {
       const categories = {};
       let msg = "";
 
-      msg += `╔══════════════╗\n     Øđilon🐦💐\n╚══════════════╝`;
+      msg += `╔══════════════╗\n     PERFECT CMD💐\n╚══════════════╝`;
 
       for (const [name, value] of commands) {
           if (value.config.role > 1 && role < value.config.role) continue;
@@ -59,12 +59,15 @@ module.exports = {
       });
 
       const totalCommands = commands.size;
-      msg += `\nCurrently,i have  ${totalCommands} commands that can be used.Soon more commands will be added\n`;
+      msg += `\nCurrently, i have  ${totalCommands} commands that can be used.Soon more commands will be added\n`;
       msg += `Type ${prefix} help command Name to view the details of that command\n`;
-      msg += `Odiamus GoatBot V2 (•̀ᴗ•́)و`;
+      msg += `Øđiløn GaotBot V2 (•̀ᴗ•́)و`;
 
 
-      const helpListImages = [" "
+      const helpListImages = [
+"https://i.imgur.com/aYS6HRa.mp4",
+"https://i.imgur.com/dOAZf6R.jpeg",
+"https://i.imgur.com/AIz8ASV.jpeg"
 ];
 
 
@@ -125,4 +128,4 @@ function roleTextToString(roleText) {
     default:
       return "Unknown role";
   }
-}
+  }
