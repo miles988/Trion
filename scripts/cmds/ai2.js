@@ -29,7 +29,7 @@ module.exports = {
       const prompt = event.body.substring(prefix.length).trim();
 
       if (!prompt) {
-        const defaultMessage = getCenteredHeader("MR PERFECT | 🧋✨") + "\n" + horizontalLine + "\nHello there! How can I help you with AI-related queries!\n" + horizontalLine;
+        const defaultMessage = getCenteredHeader("Øđilon| 🧋✨") + "\n" + horizontalLine + "\nHello there! How can I help you with AI-related queries!\n" + horizontalLine;
         await message.reply(defaultMessage);
         return;
       }
@@ -37,7 +37,7 @@ module.exports = {
       const answer = await getGPTResponse(prompt);
 
       // Adding header and horizontal lines to the answer
-      const answerWithHeader = getCenteredHeader("MR PERFECT | 🧋✨") + "\n" + horizontalLine + "\n" + answer + "\n" + horizontalLine;
+      const answerWithHeader = getCenteredHeader("Øđilon| 🧋✨") + "\n" + horizontalLine + "\n" + answer + "\n" + horizontalLine;
 
       await message.reply(answerWithHeader);
     } catch (error) {
