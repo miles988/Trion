@@ -34,7 +34,7 @@ module.exports = {
       const categories = {};
       let msg = "";
 
-      msg += `╔══════════════╗\n   𝗢𝗱𝗶𝗮𝗺𝘂𝘀 🥙💐\n╚══════════════╝`;
+      msg += `╔══════════════╗\n   𝗢𝗱𝗶𝗮𝗺𝘂𝘀 𝗖𝗺𝗱𝘀🥙💐\n╚══════════════╝`;
 
       for (const [name, value] of commands) {
           if (value.config.role > 1 && role < value.config.role) continue;
