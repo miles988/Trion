@@ -1,61 +1,70 @@
 const axios = require('axios');
-
-const GPT_API_URL = 'https://sandipapi.onrender.com/gpt';
-const PREFIXES = ['ai'];
-const horizontalLine = "━━━━━━━━━━━━━━━";
+const moment = require('moment-timezone');
 
 module.exports = {
-  config: {
-    name: "ai",
-    version: 1.0,
-    author: "OtinXSandip",
-    longDescription: "AI",
-    category: "ai",
-    guide: {
-      en: "{p} questions",
-    },
-  },
-  onStart: async function () {
-    // Initialization logic if needed
-  },
-  onChat: async function ({ api, event, args, message }) {
-    try {
-      const prefix = PREFIXES.find((p) => event.body && event.body.toLowerCase().startsWith(p));
+        config: {
+   name: "Odiamus",
+   version: "1.0.0",
+   role: 0,
+   author: "Kaizenji",
+   shortDescription: { en: "no prefix"},
+   longDescription: { en: "an Ai powered by Kaizenji Ai"},
+ category: "ai",
+ countDown: 5,
+},
 
-      if (!prefix) {
-        return; // Invalid prefix, ignore the command
-      }
+onChat: async function ({ api, event }) {
+ const message = event.body;
+ const command = "Odiamus";
 
-      const prompt = event.body.substring(prefix.length).trim();
+  if (message.indexOf(command) === 0 || message.indexOf(command.charAt(0).toUpperCase() + command.slice(1)) === 0) {
 
-      if (!prompt) {
-        const defaultMessage = getCenteredHeader("Øđilon 🐦🪶| 🧋✨") + "\n" + horizontalLine + "\nHey! How can I assist you in your AI journey?\n" + horizontalLine;
-        await message.reply(defaultMessage);
-        return;
-      }
+const args = message.split(/\s+/);
+  args.shift();
 
-      const answer = await getGPTResponse(prompt);
+const cotonouTime = moment.tz('Arfica/Johannesburg');
 
-      // Adding header and horizontal lines to the answer
-      const answerWithHeader = getCenteredHeader("Øđilon 🐦🪶| 🧋✨") + "\n" + horizontalLine + "\n" + answer + "\n" + horizontalLine;
 
-      await message.reply(answerWithHeader);
+        const date = cotonouTime.format('MMMM D, YYYY h:mm A');
+
+try {
+const { messageID, messageReply } = event;
+ let prompt = args.join(' ');
+
+if (messageReply) {
+    const repliedMessage = messageReply.body;
+      prompt = `${repliedMessage} ${prompt}`;
+ }
+     if (!prompt) {
+
+      return api.sendMessage('✨ | Hey, 𝖨 am Odiamus 𝖠𝗂\n\n𝖧𝗈𝗐 can i assist you today?', event.threadID, messageID);
+        }
+        api.sendMessage('🤍 | Odiamus Ai is searching, please wait a moment..', event.threadID);    
+
+      const gpt4 = `https://kai-gpt4-5e4314203253.herokuapp.com/api/gpt4?ask=${encodeURIComponent(prompt)}`;
+
+     const response = await axios.get(gpt4);
+
+        if (response.data && response.data.answer) {
+
+            const generatedText = response.data.answer;
+
+               api.sendMessage(`🤍 | Odiamus Ai \n\n𝗔𝗻𝘀𝘄𝗲𝗿: ${generatedText}\n\n⏰ | 🗓️: ${date}`, event.threadID, messageID);
+
+        } else {
+
+            console.error('API response did not contain expected data:', response.data);
+
+            api.sendMessage(`❌ An error occurred while generating the text response. Please try again later. Response data: ${JSON.stringify(response.data)}`, event.threadID, messageID);
+        }
     } catch (error) {
-      console.error("Error:", error.message);
-      // Additional error handling if needed
+        console.error('Error:', error);
+
+       api.sendMessage(`❌ An error occurred while generating the text response. Please try again later. Error details: ${error.message}`, event.threadID, event.messageID);
     }
-  }
+}
+},
+
+  onStart: async function ({ api, event, args }) {
+}
 };
-
-function getCenteredHeader(header) {
-  const totalWidth = 32; // Adjust the total width as needed
-  const padding = Math.max(0, Math.floor((totalWidth - header.length) / 2));
-  return " ".repeat(padding) + header;
-}
-
-async function getGPTResponse(prompt) {
-  // Implement caching logic here
-
-  const response = await axios.get(`${GPT_API_URL}?prompt=${encodeURIComponent(prompt)}`);
-  return response.data.answer;
-}
