@@ -22,7 +22,7 @@ onChat: async function ({ api, event }) {
 const args = message.split(/\s+/);
   args.shift();
 
-const cotonouTime = moment.tz('Arfica/Johannesburg');
+const cotonouTime = moment.tz('Arfica/Cotonou');
 
 
         const date = cotonouTime.format('MMMM D, YYYY h:mm A');
