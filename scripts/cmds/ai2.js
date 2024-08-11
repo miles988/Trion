@@ -1,12 +1,18 @@
-const axios = require('axios');
+ const axios = require('axios');
 
-const GPT_API_URL = 'https://sandipapi.onrender.com/gpt';
-const PREFIXES = ['ai'];
-const horizontalLine = "━━━━━━━━━━━━━━━";
+const Prefixes = [
+  'ai',
+  'anya',
+  'perfect',
+  '+ai',
+  'hi',
+  '.ai',
+  'ask',
+];
 
 module.exports = {
   config: {
-    name: "ai",
+    name: "ask",
     version: 1.0,
     author: "OtinXSandip",
     longDescription: "AI",
@@ -15,47 +21,34 @@ module.exports = {
       en: "{p} questions",
     },
   },
-  onStart: async function () {
-    // Initialization logic if needed
-  },
+  onStart: async function () {},
   onChat: async function ({ api, event, args, message }) {
     try {
-      const prefix = PREFIXES.find((p) => event.body && event.body.toLowerCase().startsWith(p));
 
+      const prefix = Prefixes.find((p) => event.body && event.body.toLowerCase().startsWith(p));
       if (!prefix) {
         return; // Invalid prefix, ignore the command
       }
-
       const prompt = event.body.substring(prefix.length).trim();
-
-      if (!prompt) {
-        const defaultMessage = getCenteredHeader("Øđilon| 🧋✨") + "\n" + horizontalLine + "\nHello there! How can I help you with AI-related queries!\n" + horizontalLine;
-        await message.reply(defaultMessage);
+   if (!prompt) {
+        await message.reply("𝑨𝒏𝒚𝒂 𝒊𝒔 𝒉𝒆𝒓𝒆 𝒘𝒊𝒍𝒍 𝒚𝒐𝒖 𝒑𝒓𝒐𝒗𝒊𝒅𝒆 𝒎𝒆 𝒕𝒉𝒆 𝒒𝒖𝒆𝒔𝒕𝒊𝒐𝒏 𝒕𝒐 𝒔𝒐𝒍𝒗𝒆 𝒊𝒕 (•̀ᴗ•́)و");
         return;
       }
 
-      const answer = await getGPTResponse(prompt);
 
-      // Adding header and horizontal lines to the answer
-      const answerWithHeader = getCenteredHeader("Øđilon| 🧋✨") + "\n" + horizontalLine + "\n" + answer + "\n" + horizontalLine;
+      const response = await axios.get(`https://sandipbaruwal.onrender.com/gpt?prompt=${encodeURIComponent(prompt)}`);
+      const answer = response.data.answer;
 
-      await message.reply(answerWithHeader);
-    } catch (error) {
+
+    await message.reply({ body: `𝓜𝓻 𝓞𝓭𝓲𝓪𝓶𝓾𝓼 𝓐𝓲
+______________________________  
+${answer}
+𝑩𝒐𝒕 𝒐𝒘𝒏𝒆𝒓 
+m.me/100080855610572`,
+});
+
+   } catch (error) {
       console.error("Error:", error.message);
-      // Additional error handling if needed
     }
   }
 };
-
-function getCenteredHeader(header) {
-  const totalWidth = 32; // Adjust the total width as needed
-  const padding = Math.max(0, Math.floor((totalWidth - header.length) / 2));
-  return " ".repeat(padding) + header;
-}
-
-async function getGPTResponse(prompt) {
-  // Implement caching logic here
-
-  const response = await axios.get(`${GPT_API_URL}?prompt=${encodeURIComponent(prompt)}`);
-  return response.data.answer;
-}
